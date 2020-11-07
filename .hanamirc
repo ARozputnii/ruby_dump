@@ -1,0 +1,3 @@
+project=ruby_dump
+test=rspec
+template=erb
