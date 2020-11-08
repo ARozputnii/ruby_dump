@@ -2,10 +2,11 @@ require 'bundler/setup'
 require 'hanami/setup'
 require 'hanami/model'
 require_relative '../lib/ruby_dump'
-require_relative '../apps/web/application'
+require_relative '../apps/api/application'
+
 
 Hanami.configure do
-  mount Web::Application, at: '/'
+  mount Api::Application, at: '/api'
 
   model do
     adapter :sql, ENV.fetch('DATABASE_URL')

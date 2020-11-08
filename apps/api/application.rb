@@ -1,9 +1,13 @@
 require 'hanami/helpers'
 require 'hanami/assets'
 
-module Web
+module Api
   class Application < Hanami::Application
     configure do
+      # default_request_format :json
+      # default_response_format :json
+      # body_parsers :json
+
       ##
       # BASIC
       #
@@ -20,7 +24,8 @@ module Web
       #
       load_paths << [
         'controllers',
-        'views'
+        'views',
+        'serializers'
       ]
 
       # Handle exceptions with HTTP statuses (true) or don't catch them (false).
@@ -81,7 +86,7 @@ module Web
       #
       # See: http://www.rubydoc.info/gems/rack/Rack/Session/Cookie
       #
-      # sessions :cookie, secret: ENV['WEB_SESSIONS_SECRET']
+      # sessions :cookie, secret: ENV['API_SESSIONS_SECRET']
 
       # Configure Rack middleware for this application
       #
@@ -103,11 +108,11 @@ module Web
 
       # The layout to be used by all views
       #
-      layout :application # It will load Web::Views::ApplicationLayout
+      layout :application # It will load Api::Views::ApplicationLayout
 
       # The relative path to templates
       #
-      templates 'templates'
+      # templates 'templates'
 
       ##
       # ASSETS
@@ -143,7 +148,7 @@ module Web
         # Specify sources for assets
         #
         sources << [
-          'assets'
+          # 'assets'
         ]
       end
 
@@ -241,7 +246,7 @@ module Web
       # FRAMEWORKS
       #
 
-      # Configure the code that will yield each time Web::Action is included
+      # Configure the code that will yield each time Api::Action is included
       # This is useful for sharing common functionality
       #
       # See: http://www.rubydoc.info/gems/hanami-controller#Configuration
@@ -250,13 +255,13 @@ module Web
         # before :authenticate!    # run an authentication before callback
       end
 
-      # Configure the code that will yield each time Web::View is included
+      # Configure the code that will yield each time Api::View is included
       # This is useful for sharing common functionality
       #
       # See: http://www.rubydoc.info/gems/hanami-view#Configuration
       view.prepare do
         include Hanami::Helpers
-        include Web::Assets::Helpers
+        include Api::Assets::Helpers
       end
     end
 
